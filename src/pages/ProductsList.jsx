@@ -5,9 +5,10 @@ import ProductCard from '../components/ProductCard'
 export default function ProductsList() {
     
     const [products,setProducts]=useState([])
-    
+    const baseUrl = import.meta.env.VITE_API_BASE_URL
+
     function loadProducts(){
-        axios.get('https://dummyjson.com/products')
+        axios.get(baseUrl+'/products')
         .then ((response)=>{
             setProducts(response.data.products)
         })

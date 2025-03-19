@@ -4,9 +4,10 @@ import  axios  from 'axios';
 
 export default function ProductDetails() {
     const [product,setProduct] = useState(null)
+    const baseUrl = import.meta.env.VITE_API_BASE_URL
     const {id}=useParams()
     useEffect(()=>{
-        axios.get(`https://dummyjson.com/products/${id}`)
+        axios.get(baseUrl+`/products/${id}`)
         .then ((response)=>{setProduct(response.data)})
     })
   return (

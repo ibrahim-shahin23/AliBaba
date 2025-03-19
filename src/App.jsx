@@ -1,20 +1,29 @@
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router';
-import ProductsList from './pages/ProductsList'
-import ProductDetails from './pages/ProductDetails'
+import { BrowserRouter } from 'react-router';
 import Header from './components/Header';
-import ShoppingCart from './pages/ShoppingCart';
-import Login from './pages/Login';
+import RoutesList from './routes/RoutesList';
+import languageContext from './context/languageContext';
+import { useState, useEffect } from 'react';
 function App() {
+
+  const [language, setLanguage] = useState('en')
+  const [isRTL, setIsRTL] = useState(false)
+
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    setIsRTL(lang === "ar"); 
+  };
+  
+  useEffect(() => {
+    document.documentElement.dir = isRTL ? "rtl" : "ltr";
+  }, [isRTL]);
+
   return (
     <BrowserRouter>
-    <Header/>
-      <Routes>
-        <Route path='/' element={<ProductsList/>}/>
-        <Route path='/shopping-cart' element={<ShoppingCart/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/product-details/:id' element={<ProductDetails/>}/>
-      </Routes>
+    <languageContext.Provider value = {{language,isRTL,changeLanguage}}>
+      <Header/>
+      <RoutesList/>
+    </languageContext.Provider>
     </BrowserRouter>
   )
 }
